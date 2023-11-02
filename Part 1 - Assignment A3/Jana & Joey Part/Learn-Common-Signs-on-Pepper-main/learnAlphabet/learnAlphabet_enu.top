@@ -1,0 +1,46 @@
+topic: ~learnAlphabet()
+language: enu
+include:lexicon_enu.top
+
+
+#concepts
+
+concept: (greeting) ^rand[hello hi "hi there" "hey" "hey there"]
+concept: (bye) ^rand[bye goodbye]
+concept: (thanks) ^rand[thanks "thank you"]
+concept: (repeat) ^rand[repeat "Can you repeat" "What did you say"]
+concept: (commonSigns) ^rand[hello bye yes no cat dog thanks please]
+concept: (checkUp) ^rand[ "{hello} are you still there?" "where are you"]
+
+
+
+#proposals
+proposal: \RSPD=90\ ^mode(disabled) Now you will learn some of the common signs in American Sign Language, I can teach you how to sign \pau=200\ ^mode(contextual) ^enumerate(~commonSigns) Shall we start?
+    u1: (start) ^nextProposal
+    u1: (no) You should practice more often, such a shame \pau=500\ we will teach you some words anyway ^gotoReactivate(question)
+
+proposal: %question \RSPD=90\ Tell me what word from the ones I enumerated would you like to learn?
+
+proposal: %hello $showImage=hello.jpg to sign Hello: Place your hand near your head and move it outward
+
+proposal: %cat $showImage=cat.jpg miaw miaw miaw
+
+proposal: %dog $showImage=dog.jfif to sign dog, tap on your leg with your hand
+
+proposal: %thanks $showImage=thanks.jpg to sign Thank You, Place your hands in front of your mouth and move them outward
+
+proposal: %yes $showImage=yes.jpg to sign Yes, Make a fist and move it upward and downward
+
+proposal: %no $showImage=no.jpg to sign No, Stick your thumb, index and middle finger out and move them towards and away each other
+
+proposal: %bye $showImage=goodbye.jpg to sign Goodbye, Open and close your hand
+
+proposal: %please $showImage=please.jpg to sign please, rub your hand on your chest
+
+#dialog
+u: (e:onStart) ^nextProposal
+u: (~repeat) Alright, I said ^sameProposal
+u: (_~commonSigns) ^gotoReactivate($1)
+u: (what are we doing) ^gotoReactivate(question)
+u:(e:Dialog/NotSpeaking20) ^start(    animations/Stand/Gestures/IDontKnow_1) ~checkUp ^wait(    animations/Stand/Gestures/IDontKnow_1)
+u:(e:Dialog/NotUnderstood) Sorry, I didn't understand

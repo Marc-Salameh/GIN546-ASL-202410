@@ -1,0 +1,35 @@
+topic: ~intro()
+language: enu
+
+concept: (greeting) ^rand[hello hi "hi there" "hey" "hey there"]
+concept: (bye) ^rand[bye goodbye]
+concept: (thanks) ^rand[thanks "thank you"]
+concept: (repeat) ^rand[repeat "Can you repeat" "What did you say"]
+concept: (commonSigns) ^rand[~greeting ~bye yes no please "nice to meet you" ~thanks please]
+
+#proposals
+proposal: Now you will learn some of the common signs in American Sign Language, I can teach you how to sign ^enumerate(~commonSigns), say any of these words and I will display its sign on the tablet and I will simultaneously explain how the movement is done. Shall we start?
+    u1: ([yes start]) ^nextProposal
+    u1: (no) You should practice more often, such a shame $onStopped=1
+
+proposal: %question Which word from the ones I enumerated would you like to learn?
+
+proposal: %greetings $showImage=hello.jpg Hello: Place your hand near your head and move it outward
+
+proposal: %niceToMeetYou $showImage=niceToMeetYou.jpg Nice to meet you, rub your hands against each other and then place your index fingers to face each other
+
+proposal: %thankYou $showImage=thanks.jpg Thank You, Place your hands in front of your mouth and move them outward
+
+proposal: %yes $showImage=yes.jpg Yes, Make a fist and move it upward and downward
+
+proposal: %no $showImage=no.jpg No, Stick your thumb, index and middle finger out and move them towards and away each other
+
+proposal: %bye $showImage=goodbye.jpg Goodbye, Open and close your hand
+
+proposal: %please $showImage=please.jpg please, rub your hand on your chest
+
+#dialog
+u: (e:onStart) ^nextProposal
+u: (~repeat) Sure ^sameProposal
+u: (_~commonSigns) ^gotoReactivate($1)
+u:(e:Dialog/NotSpeaking20) Are you still there?
