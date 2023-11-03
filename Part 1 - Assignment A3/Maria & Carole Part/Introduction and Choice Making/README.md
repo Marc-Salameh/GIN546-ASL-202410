@@ -12,6 +12,6 @@ Implemented Features: <br>
 7- We used animations such as the happy animation which displays a joyful tone in certain parts of the dialogue <br>
 
 We uploaded our video on both youtube and One Drive. <br>
-Video Links:
-Youtube Link:
-One Drive Link:
+Video Links: <br>
+Youtube Link: https://youtu.be/x1DuKJZyp94?si=3d4XZWvgQCISUN04 <br>
+One Drive Link:https://netusekedu-my.sharepoint.com/:v:/g/personal/maria_a_slim_net_usek_edu_lb/EYB9j1ijW1JOtbvvLAES7TYBxmXJTUKuh24hDyrbYbX84Q?e=Wf23r6 
