@@ -1,6 +1,8 @@
-# Use Case: Initialize Conversation with Pepper
+# Initialize Conversation with Pepper
 
-Team Members: Maria Slim & Carole Karam
+Team Members: Maria Slim & Carole Karam <br>
+
+Use Case we worked on: Use Case 1: Initialize Conversation with Pepper
 
 Implemented Features: <br>
 1- We used multiple concepts, proposals, rules and sub-rules. <br>
