@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASL Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: block;
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 18px;
+            text-align: center;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .image {
+            display: none;
+            max-width: 100%;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="question">How would you like me to translate?</p>
+        <button class="button" id="aslToEnglishButton">ASL to English</button>
+        <button class="button" id="englishToASLButton">English to ASL</button>
+        <img class="image" id="displayedImage" src="your_default_image.jpg" alt="Displayed Image">
+    </div>
+
+    <script>
+        const aslToEnglishButton = document.getElementById("aslToEnglishButton");
+        const englishToASLButton = document.getElementById("englishToASLButton");
+        const displayedImage = document.getElementById("displayedImage");
+
+        aslToEnglishButton.addEventListener("click", function() {
+            // Change the image source for ASL to English
+            displayedImage.src = "asl_to_english_image.jpg";
+            displayedImage.classList.add("active");
+        });
+
+        englishToASLButton.addEventListener("click", function() {
+            // Change the image source for English to ASL
+            displayedImage.src = "english_to_asl_image.jpg";
+            displayedImage.classList.add("active");
+        });
+    </script>
+</body>
+</html>
