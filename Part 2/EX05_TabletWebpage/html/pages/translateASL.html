@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=1280, user-scalable=no" />
+    <link rel="stylesheet" href="../css/w3.css">
+    <link rel="stylesheet" type="text/css" href="../css/formatting.css">
+    <link rel="stylesheet" type="text/css" href="../css/home.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <script src="js/jquery.js"></script>
+    
+    <script>
+        const translateASL = () => {
+            window.location.href = "pages/translateASL.html";
+        }
+
+        const learnASL = () => {
+            window.location.href = "learnASL.html";
+        }
+
+        const home = () => {
+            window.location.href = "../index.html";
+        }
+    </script>
+
+    <script type="application/javascript" src="js/fastclick.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="w3-top">
+
+        <div class="w3-white w3-padding w3-card" style="letter-spacing:4px; font-size: 25px;">
+            <img src="../pics/usek-logo-png.png" alt="Logo" style="width:5%">
+            <a class="w3-bar-item w3-button" onclick="home()">Home</a>
+            |
+            <a class="w3-bar-item w3-button active" onclick="translateASL()"> Speech/Sign Translator</a>
+            |
+            <a class="w3-bar-item w3-button" onclick="learnASL()">Learn ASL</a>
+        </div>
+    </div>
+    <hr />
+    <br />
+
+    <br />
+    <span class="home">
+        <h1 class="title"> Hello I am an ASL translator!</h1>
+        <h2 class="title2">Choose one of the following options:</h2>
+        <div class="parent">
+            <button class="button1">
+                ASL to English translator
+            </button>
+            <button class="button1">
+                English to ASL translator
+            </button>
+        </div>
+    </span>
+
+
+
+
+    <!-- Footer -->
+    <footer class="w3-center w3-light-grey w3-padding-32">
+        <p style="font-size: large;">Powered by Team ASL | All rights reserved &copy; 2023
+        </p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+# Done By: Maria Slim (ID: 202000058) and Carole Karam (ID:202100432)
+# This dialogue is between Pepper and a user that is not hearing impaired. It consists of the Pepper robot introducing itself to the user and allowing the user to choose what he or she wants to do next. In addition, once the user chooses an option, the robot confirms his or her choice.
+# NB: We also implemented the optional feautures and the features in the bonus
+
+topic: ~introduction()
+language: enu
+
+# Define QiChat concepts and proposals
+concept:(yes) ^mode(contextual)
+    ^rand[
+        "Yes"
+        "Sure"
+        "Absolutely"
+        "Of course"
+        "Certainly"
+    ]
+
+concept:(no) ^mode(contextual)
+    ^rand[
+        "No"
+        "Not at all"
+        "Negative"
+        "Absolutely not"
+        "Certainly not"
+    ]
+
+concept: (communicationType) ^mode(contextual) ["ASL to English" "English to ASL"]
+
+concept: (learningType) ^mode(contextual) ["ASL Alphabet Game" "ASL Phrases Game"]
+
+concept:(greetings) ^rand[hi hello "hey there" hey] 
+
+concept:(fine) ^mode(contextual)
+    ^rand[
+        "Great"
+        "Excellent"
+        "Good"
+        "Fantastic"
+        "Wonderful"
+    ]
+
+concept:(not_fine) ^mode(contextual)
+    ^rand[
+        "Not good"
+        "Not great"
+        "Terrible"
+        "Awful"
+        "Unpleasant"
+    ]
+
+    
+
+proposal: "Would you like to learn American Sign Language ASL and bridge the gap with your Friend?" 
+
+    u1:(~yes) Let us start $displayInfoWebpage = displayinfo.html ^nextProposal 
+    u1: (~no) No worries maybe next time
+
+proposal: "Shall we start with an ASL learning game?" 
+    u1: (~yes)       ^wait(3000) ^nextProposal
+    u1: (~no) No worries,       ^wait(3000) ^goto(communicationQuestion)
+
+proposal: "Do you want to start with an ASL Alphabet Game or an ASL Phrases Game?" 
+    u1: (I want to start with an _~learningType) Great, let's start with an $1 $learningType=$1      
+   ^wait(3000)^nextProposal
+
+#In this dialogue, we go to the next proposal after the user chooses the learning game and the robot confirms his choice because we are covering the dialogue related to the first use case which reaches till the point where the user makes a choice. Later, instead of ^nextproposal, we will add the implementation of the game according to the learningType chosen by the user. This implementation is another use case which our colleagues worked on in a different dialogue.
+
+proposal: %communicationQuestion "Would you like to communicate with your Friend?"
+    u1: (~yes)^wait(3000) ^nextProposal
+    u1: (~no) No worries, see you next time!
+
+proposal: "How would you like to communicate with your Friend: ASL to English or English to ASL?" 
+    u1:(I want you to translate from _~communicationType) Great, let's start with a translation from $1
+    $communicationType=$1 
+
+    
+# QiChat dialogue
+u: (~greetings)
+    ^wait(3000)
+what is your name? 
+
+u: (My name is _*) Welcome! How are you doing today, $1 ? 
+    $username = $1 
+    u1:(~fine) Great! ^wait(3000)
+    u1: (~not_fine) I wish you will be doing better later on! 
+    ^wait(3000)
+
+u: (ok) I am Pepper and I will be assisting you today. Would you like to know more about the way in which I can help you $username ?
+    u1:(~yes) Great! I am a robot that translates from ASL to English and vice versa and I can also assist you in your ASL learning process ^wait(3000) ^nextProposal
+
+    u1:(~no) ^wait(3000) ^nextProposal
+  
+# Listen to the event when the user is not speaking for 20s
+#event:(userNotSpeaking) {
+#        wait(20000)
+#        u: Are you still here?
+#}
