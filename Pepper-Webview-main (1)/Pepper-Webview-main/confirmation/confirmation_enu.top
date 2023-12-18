@@ -1,0 +1,97 @@
+topic: ~confirmation()
+language: enu
+include: lexicon_enu.top
+
+# Define QiChat concepts and proposals
+concept:(yes) ^mode(contextual)
+    ^rand[
+        "Yes"
+        "Sure"
+        "Absolutely"
+        "Of course"
+        "Certainly"
+    ]
+
+concept:(no) ^mode(contextual)
+    ^rand[
+        "No"
+        "Not at all"
+        "Negative"
+        "Absolutely not"
+        "Certainly not"
+    ]
+
+concept: (communicationType) ^mode(contextual) ["ASL to English" "English to ASL"]
+
+concept: (learningType) ^mode(contextual) ["ASL Alphabet Game" "ASL Phrases Game"]
+
+concept:(greetings) ^rand[hi hello "hey there" hey] 
+
+concept:(fine) ^mode(contextual)
+    ^rand[
+        "Great"
+        "Excellent"
+        "Good"
+        "Fantastic"
+        "Wonderful"
+    ]
+
+concept:(not_fine) ^mode(contextual)
+    ^rand[
+        "Not good"
+        "Not great"
+        "Terrible"
+        "Awful"
+        "Unpleasant"
+    ]
+
+proposal:%welcomeMessage $showImage= hi.jpg "I am Pepper and I will be assisting you today Would you like me to introduce my self $username " ?
+    u1:(~yes) Great! I am a robot that translates from ASL to English and vice versa, and I can also assist you in your ASL learning process ^wait(3000) ^nextProposal
+
+    u1:(~no) ^wait(3000) ^nextProposal
+    
+proposal: "Would you like to learn American Sign Language ASL, and bridge the gap with your Friend?" $showImage = aslToEnglish.png
+
+    u1:(~yes) ^run(animations/happy) Let us start ^gotoReactivate(YesOutput) 
+    u1: (~no) No worries maybe next time ^gotoReactivate(NoOutput)
+
+proposal: %NoOutput $NoOutput=1
+proposal: %YesOutput $YesOutput=1
+
+proposal: %translateASL $translateASL=1 You selected the translate ASL option, sign me a letter, and i will translate it
+proposal: %learnASL $learnASL=1 You selected the learn ASL option, say a letter or a word and i will sign it
+proposal: %BackButton $BackOutput=1 You selected Home, returning to main menu $onStopped=1
+
+#u:(~yes) ^gotoReactivate(yesProposal)
+#u:(~no) ^gotoReactivate(noProposal)
+
+# QiChat dialogue
+u: (~greetings) ^wait(3000) What is your name? 
+
+u: (_*) Welcome! How are you doing today $1 ? 
+    $username = $1 
+    u1:(~fine) Great! ^wait(3000) ^gotoReactivate(welcomeMessage)
+    u1: (~not_fine) I wish you will be doing better later on! 
+    ^wait(3000) ^nextProposal
+
+u:(e:translateASLEvent) ^gotoReactivate(translateASL)
+u:(translate ASL) ^gotoReactivate(translateASL)
+
+u:(e:learnASLEvent) ^gotoReactivate(learnASL)
+u:(learn ASL) ^gotoReactivate(learnASL)
+
+u:(Home) ^gotoReactivate(BackButton)
+u:(e:BackButton) ^gotoReactivate(BackButton)
+
+u: (e:HomeEvent) home event fired
+u: (e:MyEvent) show letter event fired $displaySingleLetter=1 
+
+u: (still) i am still active
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+
+# Catching inputs and triggering outputs
+#u:(e:onStart) $onStopped=1
+
+# Replying to speech
+#u:(~hello) ~hello

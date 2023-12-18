@@ -1,0 +1,43 @@
+topic: ~learnletter()
+language: enu
+
+concept: (greeting) ^rand[hello hi "hi there" "hey" "hey there"]
+concept: (bye) ^rand[bye goodbye]
+concept: (thanks) ^rand[thanks "thank you"]
+concept: (repeat) ^rand[repeat "Can you repeat" "What did you say"]
+concept: (commonSigns) ^rand[ hello bye yes no cat dog thanks please ~greeting ~bye yes no please "nice to meet you" ~thanks A B C D E F G]
+
+#dialog
+u:(_~commonSigns) ^gotoReactivate($1)
+u:(~repeat) Sure ^sameProposal
+u:(e:Dialog/NotSpeaking20) Are you still there?
+
+proposal: %A $showImage=A.jpg This is the letter A, hold up your dominant hand in a fist facing outward, with the thumb sticking up to the side of the fist
+ 
+proposal: %B $showImage=B.jpg This is the letter B, hold your dominant hand open palm facing outward, all four fingers standing upright and kept together while tucking your thumb into your palm.
+ 
+proposal: %C $showImage=C.jpg This is the letter C, bring one hand up at about shoulder height and cup into a c shape.
+ 
+proposal: %D $showImage=D.jpg This is the letter D, hold up your dominant hand curving your middle ring and pinkie fingers together and touching them to your thumb while only your index finger is standing upright.
+ 
+proposal: %E $showImage=E.jpg This is the letter E, Bring on hand up about shoulder height, The palm faces out and your pinky ring finger middle finger and pointer finger all curl down into the palm The thumb is tucked in sideways so that all the other fingers rest along its side
+ 
+proposal: %F $showImage=F.jpg This is the letter F, hold up your dominant, hand palm facing out with your index finger and thumb touching while your 3 other fingers are held up
+ 
+proposal: %G $showImage=G.jpg This is the letter G, Extend the pointer and thumb out so they are parallel to one another Tuck remaining fingers into the palm
+
+roposal: %hello $showImage=hello.jpg to sign Hello: Place your hand near your head and move it outward
+
+proposal: %cat $showImage=cat.jpg miaw miaw miaw
+
+proposal: %dog $showImage=dog.jfif to sign dog, tap on your leg with your hand
+
+proposal: %thanks $showImage=thanks.jpg to sign Thank You, Place your hands in front of your mouth and move them outward
+
+proposal: %yes $showImage=yes.jpg to sign Yes, Make a fist and move it upward and downward
+
+proposal: %no $showImage=no.jpg to sign No, Stick your thumb, index and middle finger out and move them towards and away each other
+
+proposal: %bye $showImage=goodbye.jpg to sign Goodbye, Open and close your hand
+
+proposal: %please $showImage=please.jpg to sign please, rub your hand on your chest
