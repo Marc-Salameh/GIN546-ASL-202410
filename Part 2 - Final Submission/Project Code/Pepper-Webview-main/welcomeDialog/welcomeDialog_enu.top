@@ -1,0 +1,71 @@
+topic: ~welcomeDialog()
+language: enu
+
+# Define QiChat concepts and proposals
+concept:(yes) ^mode(contextual)
+    ^rand[
+        "Yes"
+        "Sure"
+        "Absolutely"
+        "Of course"
+        "Certainly"
+    ]
+
+concept:(no) ^mode(contextual)
+    ^rand[
+        "No"
+        "Not at all"
+        "Negative"
+        "Absolutely not"
+        "Certainly not"
+    ]
+
+concept: (communicationType) ^mode(contextual) ["ASL to English" "English to ASL"]
+
+concept: (learningType) ^mode(contextual) ["ASL Alphabet Game" "ASL Phrases Game"]
+
+concept:(greetings) ^rand[hi hello "hey there" hey] 
+
+concept:(fine) ^mode(contextual)
+    ^rand[
+        "Great"
+        "Excellent"
+        "Good"
+        "Fantastic"
+        "Wonderful"
+    ]
+
+concept:(not_fine) ^mode(contextual)
+    ^rand[
+        "Not good"
+        "Not great"
+        "Terrible"
+        "Awful"
+        "Unpleasant"
+    ]
+
+proposal:$showImage= hi.jpg "I am Pepper and I will be assisting you today Would you like me to introduce my self $username " ?
+    u1:(~yes) Great! I am a robot that translates from ASL to English and vice versa and I can also assist you in your ASL learning process ^wait(3000) ^nextProposal
+
+    u1:(~no) ^wait(3000) ^nextProposal
+    
+proposal: "Would you like to learn American Sign Language ASL, and bridge the gap with your Friend?" $showImage = aslToEnglish.png
+
+    u1:(~yes) ^run(animations/happy) Let us start ^gotoReactivate(YesOutput) 
+    u1: (~no) No worries maybe next time ^gotoReactivate(NoOutput)
+
+proposal: %NoOutput $NoOutput=1
+proposal: %YesOutput $YesOutput=1
+
+
+# QiChat dialogue
+u: (~greetings) ^wait(3000) Hello What is your name? 
+
+u: (_*) Welcome! How are you doing today $1 ? 
+    $username = $1 
+    u1:(~fine) Great! ^wait(3000) ^nextProposal
+    u1: (~not_fine) I wish you will be doing better later on! 
+    ^wait(3000) ^nextProposal
+
+
+  

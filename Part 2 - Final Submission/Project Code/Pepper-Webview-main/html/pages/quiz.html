@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" type="text/css" href="../css/quiz-new.css">
+</head>
+
+<body>
+    <div id="signIn">
+        <div id="top">
+            <h1 id="welcomeForm">
+                Welcome to the quiz
+            </h1>
+            <p id="welcomeText">
+                Please click on start
+            </p>
+        </div>
+        <button id="startButton">Start</button>
+    </div>
+
+    <div id="quizDiv" style="display: none;">
+        <div id="welcome"></div>
+        <div id="question"></div>
+        <div id="answers"></div>
+        <button class="btn" onclick="first()">First</button>
+        <button class="btn" onclick="previous()">Previous</button>
+        <button class="btn" onclick="next()">Next</button>
+        <button class="btn" onclick="last()">Last</button>
+        <button class="btn" onclick="resetQ()">Reset</button>
+        <button class="btn" onclick="Submit()">Submit</button>
+        <ul id="questions"></ul>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        document.getElementById("startButton").addEventListener("click", function () {
+        alert("Button clicked!");
+    });
+        var questions = ["What is this sign?", "What is this sign?", "What is this sign?", "What is this sign?", "What is this sign?", "What is this sign?"];
+        var rightAnswers = ["hello", "goodbye", "yes", "no", "please", "thank you"];
+        var images = ["hello.png", "goodbye.png", "yes.png", "no.png", "please.png", "thank you.png"];
+        var allAnswers = [["hello", "goodbye", "yes"], ["goodbye", "yes", "no"], ["yes", "no", "please"], ["no", "please", "thank you"], ["yes", "no", "please"], ["hello", "goodbye", "please"]];
+
+        var quest = [];
+        var currentQ;
+
+        class Question {
+            constructor(question, rightAnswer, arr, qNum, image) {
+                this.question = question;
+                this.rightAnswer = rightAnswer;
+                this.allAnswers = arr;
+                this.qNum = qNum;
+                this.actualAnswer = -1;
+                this.image = image;
+            }
+
+            getQ() {
+                return this.question;
+            }
+
+            getNum() {
+                return this.qNum;
+            }
+
+            getAns() {
+                var answers = [];
+                for (var i = 0; i < this.allAnswers.length; i++) {
+                    answers.push(this.allAnswers[i]);
+                }
+                return answers;
+            }
+
+            getRightAns() {
+                return this.rightAnswer;
+            }
+
+            getActualAns() {
+                return this.actualAnswer;
+            }
+
+            displayQ() {
+                let s = "Question " + this.getNum() + "/" + rightAnswers.length + ") ";
+                s += "<p class=\"ex\">" + this.getQ() + "</p><br>";
+                s += "<img src=\"" + this.image + "\" alt=\"Question Image\"><br>";
+                document.getElementById("question").innerHTML = s;
+            }
+
+            displayA() {
+                var ans = this.getAns();
+                var m = "";
+                for (var i = 0; i < ans.length; i++) {
+                    m += "<input type='radio' id='ans" + this.getNum() + "' name='answer' value='ans" + this.getNum() + "'>";
+                    m += "<label for='ans" + this.getNum() + "' class='ansList'>" + ans[i] + "</label><br>";
+                }
+                document.getElementById("answers").innerHTML = m;
+            }
+
+            displayCheckedAns() {
+                if (this.actualAnswer !== -1) {
+                    document.getElementsByName("answer")[this.actualAnswer].checked = true;
+                }
+            }
+
+            reset() {
+                var answ = document.getElementsByName('answer');
+                for (var i = 0; i < answ.length; i++) {
+                    if (answ[i].checked) {
+                        answ[i].checked = false;
+                        this.actualAnswer = -1;
+                    }
+                }
+            }
+
+            setActualAns(actAns) {
+                this.actualAnswer = actAns;
+            }
+        }
+
+        function display(num) {
+            saveAnswers();
+            q = quest[num - 1];
+            currentQ = q;
+            currentQ.displayQ();
+            currentQ.displayA();
+            q.displayCheckedAns();
+        }
+
+        function startQuiz() {
+            document.getElementById("welcome").innerHTML = "<h1>Welcome to the quiz!</h1>";
+            document.getElementById("signIn").style.display = "none";
+            display(1);
+            displayList();
+            document.getElementById("quizDiv").style.display = "block";
+        }
+
+        function displayList() {
+            var list = "";
+            for (var i = 1; i < quest.length + 1; i++) {
+                list += "<li id='Q" + i + "' class='questionNum' onclick='display(" + i + ")'>Question " + i + "</li>";
+            }
+            document.getElementById("questions").innerHTML = list;
+        }
+
+        function first() {
+            display(1);
+        }
+
+        function last() {
+            display(quest.length);
+        }
+
+        function next() {
+            if (currentQ.getNum() === quest.length) {
+                first();
+            } else {
+                display(currentQ.getNum() + 1);
+            }
+        }
+
+        function previous() {
+            if (currentQ.getNum() === 1) {
+                last();
+            } else {
+                display(currentQ.getNum() - 1);
+            }
+        }
+
+        function saveAnswers() {
+            var ele = document.getElementsByName('answer');
+            var q = quest[currentQ.getNum() - 1];
+            for (var i = 0; i < ele.length; i++) {
+                if (ele[i].checked) {
+                    q.actualAnswer = i;
+                }
+            }
+        }
+
+        function resetQ() {
+            var qu = quest[currentQ.getNum() - 1];
+            qu.reset();
+        }
+
+        function calculateScore() {
+            var score = 0;
+            for (var i = 0; i < rightAnswers.length; i++) {
+                let answersToQuest = quest[i].getAns();
+                if (answersToQuest[quest[i].getActualAns()] === quest[i].getRightAns()) {
+                    score++;
+                }
+            }
+            return score;
+        }
+
+        function restart() {
+            location.reload();
+        }
+
+        function Submit() {
+            saveAnswers();
+            document.getElementById("quizDiv").style.display = "none";
+            var result = "<ol id='results'>";
+            for (var i = 0; i < rightAnswers.length; i++) {
+                var answersToQuest = quest[i].getAns();
+                if (quest[i].getActualAns() != -1 && answersToQuest[quest[i].getActualAns()] === quest[i].getRightAns()) {
+                    result += "<li>Your answer is correct: <span class='rightAnswer'>" + answersToQuest[quest[i].getActualAns()] + "</span></li><br>";
+                } else if (quest[i].getActualAns() != -1 && answersToQuest[quest[i].getActualAns()] != quest[i].getRightAns()) {
+                    result += "<li>Your answer is incorrect: <span class='wrongAnswer'>" + answersToQuest[quest[i].getActualAns()] + "</span><br>The right answer is: <span class='noAnswer'>" + quest[i].getRightAns() + "</span></li><br>";
+                } else {
+                    result += "<li><span class='wrongAnswer'>You didn't answer the question</span><br>The right answer is: <span class='noAnswer'>" + quest[i].getRightAns() + "</span></li><br>";
+                }
+            }
+
+            result += "Total Score:  " + calculateScore() + "/" + rightAnswers.length;
+            result += "</ol><br><br>";
+            result += "<button type='button' class='btn' onclick='restart()'>Restart</button>";
+
+            document.getElementById("results").innerHTML = result;
+        }
+
+        // Fill in the array of Question objects
+        for (var i = 0; i < questions.length; i++) {
+            let q = new Question(questions[i], rightAnswers[i], allAnswers[i], i + 1, images[i]);
+            quest.push(q);
+        }
+
+        var currentQ = quest[0];
+    </script>
+</body>
+
+</html>
+
