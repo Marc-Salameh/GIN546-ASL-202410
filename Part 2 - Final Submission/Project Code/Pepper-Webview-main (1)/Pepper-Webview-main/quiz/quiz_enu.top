@@ -1,0 +1,38 @@
+topic: ~quiz()
+language: enu
+
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+
+# Catching inputs and triggering outputs
+#u:(e:onStart) $onStopped=1
+
+# Replying to speech
+#u:(~hello) ~hello
+
+u: (e:onStart) ^nextProposal
+$score =0
+ proposal: "What is this sign? choose between the options below" $showImage = hello.png
+    u1:(hello) ^run(animations/happy)  Very Good, well done ^nextProposal 
+    u1: (bye) Wrong answer, try the second question ^nextProposal
+    
+proposal: "What is this sign? choose between the options below" $showImage = goodbye.png
+    u1:(bye) ^run(animations/happy)  Very Good ^nextProposal
+    u1: (please) Wrong answer, try the third question ^nextProposal
+    
+proposal: "What is this sign? choose between the options below" $showImage = thankyou.png
+    u1:(thank you) ^run(animations/happy)  Very Good ^nextProposal
+    u1: (please) Wrong answer, try the fourth question ^nextProposal
+    
+proposal: "What is this sign? choose between the options below" $showImage = please.png
+    u1:(thank you) ^run(animations/happy)  Very Good ^nextProposal
+    u1: (bye) Wrong answer, try the fifth question ^nextProposal
+
+proposal: "What is this sign? choose between the options below" $showImage = yes.png
+    u1:(yes) ^run(animations/happy)  Very Good ^nextProposal
+    u1: (hello) Wrong answer, try the sixth question ^nextProposal
+    
+proposal: "What is this sign? choose between the options below" $showImage = no.png
+    u1:(no) ^run(animations/happy)  Very Good ^nextProposal
+    u1: (please) Wrong answer, try the second question
+    
