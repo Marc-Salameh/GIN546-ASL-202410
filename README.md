@@ -6,5 +6,6 @@ The final project contains: <br>
 2- Learn ASL using speech and images worked by Marc and Jana <br>
 3- ASL quiz using speech and images worked by Goerges and Maria <br>
 4- Pepper's tablet website design, document templates, PowerPoint presentation, designs, animations, and transitions worked by Marc <br>
+5- Introduction dialog: Maria and Carole <br>
 
 Interaction video one drive link: (copy and paste it in your browser) <br>
